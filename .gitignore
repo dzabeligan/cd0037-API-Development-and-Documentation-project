@@ -1,6 +1,9 @@
 .vscode
 __pycache__
 venv
+test_setup.sh
+.env
+check_style.sh
 
 # OS generated files #
 ######################
