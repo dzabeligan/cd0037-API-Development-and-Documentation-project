@@ -29,7 +29,7 @@ class QuestionView extends Component {
           questions: result.questions,
           totalQuestions: result.total_questions,
           categories: result.categories,
-          currentCategory: result.current_category,
+          currentCategory: null,
         });
         return;
       },
@@ -41,7 +41,11 @@ class QuestionView extends Component {
   };
 
   selectPage(num) {
-    this.setState({ page: num }, () => this.getQuestions());
+    this.setState({ page: num }, () =>
+      this.state.currentCategory
+        ? this.getByCategory(this.state.currentCategory)
+        : this.getQuestions()
+    );
   }
 
   createPagination() {
@@ -65,7 +69,9 @@ class QuestionView extends Component {
 
   getByCategory = (id) => {
     $.ajax({
-      url: `/categories/${id}/questions`, //TODO: update request URL
+      url: `/categories/${id}/questions?page=${
+        this.state.currentCategory === id ? this.state.page : 1
+      }`, //TODO: update request URL
       type: 'GET',
       success: (result) => {
         this.setState({
@@ -97,7 +103,7 @@ class QuestionView extends Component {
         this.setState({
           questions: result.questions,
           totalQuestions: result.total_questions,
-          currentCategory: result.current_category,
+          currentCategory: null,
         });
         return;
       },
@@ -142,6 +148,7 @@ class QuestionView extends Component {
               <li
                 key={id}
                 onClick={() => {
+                  this.setState({ page: 1 });
                   this.getByCategory(id);
                 }}
               >

@@ -14,6 +14,7 @@ class Question extends Component {
   }
 
   render() {
+    const DEFAULT_IMAGE = 'art'
     const { question, answer, category, difficulty } = this.props;
     return (
       <div className='Question-holder'>
@@ -21,8 +22,8 @@ class Question extends Component {
         <div className='Question-status'>
           <img
             className='category'
-            alt={`${category.toLowerCase()}`}
-            src={`${category.toLowerCase()}.svg`}
+            alt={`${category ? category.toLowerCase() : DEFAULT_IMAGE}`}
+            src={`${category ? category.toLowerCase() : DEFAULT_IMAGE}.svg`}
           />
           <div className='difficulty'>Difficulty: {difficulty}</div>
           <img
